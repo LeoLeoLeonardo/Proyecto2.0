@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row m-4">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                CRUD MVC
+            </div>
+            <div class="card-body">
+                <table id="tbclientes" class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class"row">
+                    <div class="col-sm-12">
+
+                        <input type="text" id="txtIdCliente" />
+                        <div class="form-group">
+                            <label for="txtNombre">Nombre:</label>
+                            <input type="text" class="form-control" id="txtNombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtApellido">Apellido:</label>
+                            <input type="text" class="form-control" id="txtApellido">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtCelular" >Celular:</label>
+                            <input type="text" class="form-control" id="txtCelular">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtEmail">Correo:</label>
+                            <input type="text" class="form-control" id="txtEmail">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cerrar">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $('#tbclientes').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("Listar", "Clientes")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "nombre" },
+                    { "data": "apellido" },
+                    { "data": "celular" },
+                    { "data": "email" },
+                    {
+                        "data": "Id", "render": function (data) {
+                            return "<button class='btn btn-primary btn-sm' type='button' onclick='abrirModal(" + data + ")'><i class='fas fa-pen'></i></button>" +
+                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: 'Agregar Nuevo',
+                        attr: { class: 'btn btn-success btn-sm' },
+                        action: function (e, dt, node, config) {
+                            abrirModal(0)
+                        }
+                    }
+                ],
+            });
+        });
+
+        function abrirModal($idclientes) {
+
+            $("#txtIdCliente")
+
+            if ($idclientes != 0) {
+                $.ajax({
+                    url: "@Url.Action("Obtener", "Clientes")" + "?idClientes=" + $idclientes,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data != null) {
+                            $("#txtNombre").val(data.nombre);
+                            $("#txtApellido").val(data.apellido);
+                            $("#txtCelular").val(data.celular);
+                            $("#txtEmail").val(data.email);
+                        }
+                    }
+                });
+            } else {
+                $("#txtNombre").val("");
+                $("#txtApellido").val("");
+                $("#txtCelular").val("");
+                $("#txtEmail").val("");
+            }
+
+            $("#formModal").modal("show");
+        }
+
+        function Guardar() {
+
+            var $data = {
+                oClientes: {
+                    Id: parseInt($("#txtIdCliente").val()),
+                    nombre: $("#txtNombre").val(),
+                    apellido: $("#txtApellido").val(),
+                    celular: $("#txtCelular").val(),
+                    email: $("#txtEmail").val(),
+                }
+            }
+
+            console.log($data);
+
+        }
+
+        function eliminar($idclientes) {
+            alert($idclientes)
+
+        }
+
+    </script>
+
+}

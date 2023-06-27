@@ -25,6 +25,18 @@ namespace Proyecto2._0
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Plugin/css").Include(
+                      "~/Content/dataTable/css/jquery.dataTables.min.css",
+                      "~/Content/fontawesome-free/css/all.css",
+                      "~/Content/dataTable/css/buttons.dataTables.min.css"
+                      ));
+
+            bundles.Add(new StyleBundle("~/Content/Plugin/js").Include(
+                      "~/Content/dataTable/js/jquery.dataTables.min.js",
+                      "~/Content/fontawesome-free/js/all.js",
+                      "~/Content/dataTable/js/dataTables.buttons.min.js"
+                      ));
         }
     }
 }
