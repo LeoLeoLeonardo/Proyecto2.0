@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Proyecto2._0.Models;
+using Proyecto2._0.Permisos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Proyecto2._0.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -25,6 +28,12 @@ namespace Proyecto2._0.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            Session["usuario"] = null;
+            return RedirectToAction("Login", "Acceso");
         }
     }
 }

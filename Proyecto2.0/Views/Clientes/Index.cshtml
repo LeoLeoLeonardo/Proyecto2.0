@@ -51,7 +51,7 @@
                             <input type="text" class="form-control" id="txtApellido">
                         </div>
                         <div class="form-group">
-                            <label for="txtCelular" >Celular:</label>
+                            <label for="txtCelular">Celular:</label>
                             <input type="text" class="form-control" id="txtCelular">
                         </div>
                         <div class="form-group">
@@ -72,10 +72,15 @@
 
 @section scripts{
 
+    
+
     <script>
+
+        var tabla_clientes;
+
         $(document).ready(function () {
 
-            $('#tbclientes').DataTable({
+            tabla_clientes = $('#tbclientes').DataTable({
                 "ajax": {
                     "url": "@Url.Action("Listar", "Clientes")",
                     "type": "GET",
@@ -111,7 +116,7 @@
 
         function abrirModal($idclientes) {
 
-            $("#txtIdCliente")
+            $("#txtIdCliente").val($idclientes);
 
             if ($idclientes != 0) {
                 $.ajax({
@@ -151,12 +156,54 @@
                 }
             }
 
-            console.log($data);
 
-        }
+                $.ajax({
+                    url: "@Url.Action("Guardar", "Clientes")",
+                    type: "POST",
+                    data: JSON.stringify($data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.resultado) {
+                            tabla_clientes.ajax.reload();
+                            $("#formModal").modal('hide');
+                        } else {
+                            alert("No se pudo guardar los cambios");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    },
+                    beforeSend: function () {
+
+                    }
+                });
+
+                console.log($data);
+            }
+
+
+
+
 
         function eliminar($idclientes) {
-            alert($idclientes)
+
+            if (confirm("¿Realmente desea eliminar?")) {
+
+                $.ajax({
+                    url: "@Url.Action("Eliminar", "Clientes")" + "?idClientes=" + $idclientes,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.resultado) {
+                            tabla_clientes.ajax.reload();
+                        } 
+                    }
+                });
+            }
 
         }
 
