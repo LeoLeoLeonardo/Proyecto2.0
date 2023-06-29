@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="row m-4">
     <div class="col-sm-12">
         <div class="card">
@@ -33,7 +34,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" onclick="Cerrar()" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -63,7 +64,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cerrar">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cerrar()">Cerrar</button>
                 <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
             </div>
         </div>
@@ -184,27 +185,10 @@
             }
 
 
-
-
-
-        function eliminar($idclientes) {
-
-            if (confirm("¿Realmente desea eliminar?")) {
-
-                $.ajax({
-                    url: "@Url.Action("Eliminar", "Clientes")" + "?idClientes=" + $idclientes,
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        if (data.resultado) {
-                            tabla_clientes.ajax.reload();
-                        } 
-                    }
-                });
-            }
-
+        function Cerrar() {
+            $("#formModal").modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         }
 
     </script>

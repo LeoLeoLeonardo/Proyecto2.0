@@ -86,6 +86,8 @@ namespace Proyecto2._0.Controllers
 
         }
 
+        
+
         public JsonResult eliminar(int idClientes)
         {
             bool respuesta = true;
