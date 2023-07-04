@@ -8,7 +8,8 @@ using System.Web.Mvc;
 
 namespace Proyecto2._0.Controllers
 {
-
+    [ValidarSesion]
+    
     public class HomeController : Controller
     {
         public ActionResult Index()

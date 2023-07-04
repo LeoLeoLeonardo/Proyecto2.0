@@ -12,7 +12,7 @@ namespace Proyecto2._0.Permisos
         {
             if (HttpContext.Current.Session["usuario"] == null)
             {
-                filterContext.Result = new RedirectResult("~Acceso/Login");
+                filterContext.Result = new RedirectResult("~/Acceso/Login");
             }
             base.OnActionExecuting(filterContext);
         }

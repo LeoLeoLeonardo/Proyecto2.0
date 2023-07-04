@@ -19,6 +19,7 @@ using Proyecto2._0.Permisos;
 
 namespace Proyecto2._0.Controllers
 {
+   
 
     public class AccesoController : Controller
     {
@@ -116,8 +117,7 @@ namespace Proyecto2._0.Controllers
 
         public static string convertirSha256(string texto)
         {
-            //using System.text;
-            //USAR LA REFERENCIA DE "System.Security.Cryptography"
+            
 
             StringBuilder Sb = new StringBuilder();
             using(SHA256 hash = SHA256.Create())

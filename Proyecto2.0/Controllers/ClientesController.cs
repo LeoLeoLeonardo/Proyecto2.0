@@ -9,11 +9,16 @@ using Proyecto2._0.Controllers;
 using System.Web.Compilation;
 using Microsoft.Ajax.Utilities;
 using System.Web.UI.WebControls;
+
+using System.Data.SqlClient;
+using System.Data;
 using Proyecto2._0.Permisos;
+
 
 namespace Proyecto2._0.Controllers
 {
 
+    [ValidarSesion]
 
     public class ClientesController : Controller
     {
@@ -88,7 +93,7 @@ namespace Proyecto2._0.Controllers
 
         
 
-        public JsonResult eliminar(int idClientes)
+        public JsonResult Eliminar(int idClientes)
         {
             bool respuesta = true;
 

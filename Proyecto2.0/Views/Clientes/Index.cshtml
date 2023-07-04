@@ -95,7 +95,7 @@
                     {
                         "data": "Id", "render": function (data) {
                             return "<button class='btn btn-primary btn-sm' type='button' onclick='abrirModal(" + data + ")'><i class='fas fa-pen'></i></button>" +
-                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"
+                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,
                         "searchable": false,
@@ -189,6 +189,26 @@
             $("#formModal").modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
+        }
+
+         function Eliminar($idclientes) {
+
+            if (confirm("¿Realmente desea eliminar?")) {
+
+                $.ajax({
+                    url: "@Url.Action("Eliminar", "Clientes")" + "?idClientes=" + $idclientes,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.resultado) {
+                            tabla_clientes.ajax.reload();
+                        }
+                    }
+                });
+            }
+
         }
 
     </script>
